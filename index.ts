@@ -38,23 +38,25 @@ class Folder{
    static get getFolder(){
         return Folder.folder;
     }
-    static showFolder(){
-        Folder.getFolder.forEach((e) => {
-            console.log(`Folder : ${e.name}\n`)
-            console.log(e.name);
-            console.log(e.path)
-            console.log(`\nFile\n`)
-            e.files.forEach((e) => {
-                console.log(e.name);
-                console.log(e.path)
-                console.log(e.type)
-                console.log(e.date)
-            })
-        })
+    static  setFileExtensin(fileName:string):string{
+        let startFindExtens = false;
+                let extens = "";
+                for(let x of fileName){
+                    if(x === "."){
+                        startFindExtens = true;
+                    };
+                    if(startFindExtens){
+                        extens += x;
+                    }else{
+
+                    }
+                };
+                return extens;
     }
 };
 
 let isCond = true;
+let fileSyntax = /^[a-z]+(\.[a-z]+)$/;
 while(isCond){
      let option = await select({message:"Select any one",choices:[{name:"Add Folder",value:"Add Folder"},{name:"Add File",value:"Add File"},{name:"Remove File",value:"Remove File"},{name:"Rename File",value:"Rename File"},{name:"Remove Folder",value:"Remove Folder"},{name:"Rename Folder",value:"Rename Folder"},{name:"Show Folder",value:"Show Folder"}]})
      if(option === "Add Folder"){
@@ -100,23 +102,24 @@ while(isCond){
             let findFolder = Folder.folder.find((e) => e.name.toLowerCase().split(/\s+/).join("") === inputFolderName.toLowerCase().split(/\s+/).join(""));
             if(findFolder?.name){
                 let fileName = await input({message:"Enter a file name"});
-                let fileType = await input({message:"Enter the extension of file"});
                 //check if file name exist in the files
                 let duplictName = findFolder.files.find((e) => e.name === fileName);
                 if(duplictName?.name){
                     console.log(`Please dont be add same name file.`);
                 }else{
                     if(fileName.trim() === ""){
-                        console.log("Please Enter the Name of the file")
-                    }else if(fileType.trim() === ""){
-                        console.log("Please Enter the extension of the file")
+                        console.log("Please Enter the Name of the file");
                     }
                     else{
-                        // create the object of the file
-                        let file:FileType = {name:fileName,path:`/path/${findFolder.name}/${fileName}`,type:fileType, date: new Date()}
+                        if(fileName.toLowerCase().match(fileSyntax)){
+                            // create the object of the file
+                        let file:FileType = {name:fileName,path:`/path/${findFolder.name}/${fileName}`,type:Folder.setFileExtensin(fileName), date: new Date()}
                         //push the object in the file array
                     findFolder.files.push(file)
                     console.log(findFolder);
+                        }else{
+                            console.log("Please give the extension of file with . notation");
+                        }
                     }
                 }
                 
@@ -191,8 +194,6 @@ while(isCond){
                 if(findFile?.name){
                     //give the new name of the file
                     let editFileName = await input({message:"Enter the new name of the file"});
-                    //give the new extension of the file
-                    let editFileExtens = await input({message:"Enter the new File Extension"});
                     //check if new name is already exist in the files
                     let findDUplictName = files.find((e) => e.name === editFileName);
                     if(findDUplictName?.name){
@@ -200,15 +201,17 @@ while(isCond){
                     }else{
                         if(editFileName.trim() === ""){
                             console.log("Please Enter the new Name of the file")
-                        }else if(editFileExtens.trim() === ""){
-                            console.log("Please Enter the new extension of the file")
                         }
                         else{
-                            //Update the file 
-                            findFile.name = editFileName;
-                            findFile.path = `/path/${findFolderForEdit.name}/${editFileName}`;
-                            findFile.type = editFileExtens;
-                            findFile.date = new Date();
+                           if(editFileName.toLowerCase().match(fileSyntax)){
+                             //Update the file 
+                             findFile.name = editFileName;
+                             findFile.path = `/path/${findFolderForEdit.name}/${editFileName}`;
+                             findFile.type = Folder.setFileExtensin(editFileName);
+                             findFile.date = new Date();
+                           }else{
+                            console.log(`Please give the extension of file with . notation`);
+                           }
                         }
                     }
                 }else{
@@ -293,8 +296,33 @@ while(isCond){
         }
 
     }else if(option === "Show Folder"){
-        // show the folder and the files of the folder
-        Folder.showFolder();
+         isCond = true;
+        while(isCond){
+            let searchFolder = await input({message:"Enter the name of the folder for show the folder"})
+        if(searchFolder.trim() === ""){
+            console.log("Please Enter thr name of the folder.");
+        }else{
+            let findFolderForShow = Folder.folder.find((e) => e.name.toLowerCase().split(/\s+/).join("") === searchFolder.toLowerCase().split(/\s+/).join(""));
+            if(findFolderForShow){
+                let {name,path,files} = findFolderForShow;
+                console.log(`\n \t### Folder :${name} . ###\n`);
+                console.log(`\n \t### Folder Path :${path} . ###\n`);
+                console.log(`\t \t ### FILES ### \n`)
+                console.log(`\t ---------------------\n`)
+                files.forEach((e:FileType):void => {
+                    console.log(`\t FILE NAME : ${e.name} . \n`);
+                    console.log(`\t FILE PATH : ${e.path} . \n`);
+                    console.log(`\t FILE TYPE : ${e.type} . \n`);
+                    console.log(`\t FILE DATE : ${e.date.getDate()}-${e.date.getMonth()+1}-${e.date.getFullYear()} . \n`);
+                    console.log(`\t ---------------------\n`)
+                })
+            }else{
+                console.log(`\n Folder : ${searchFolder} is not available`)
+            }
+        }
+        let showMreFolder = await confirm({message:"Do you want to show again the folders."})
+        isCond = showMreFolder;
+        }
     }
     //provide confirmation for run again this process
     let runAgain = await confirm({message:"Do you want to run again."})
