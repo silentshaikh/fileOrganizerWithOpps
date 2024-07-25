@@ -1,5 +1,5 @@
 {
-  "name": "fileorganizer",
+  "name": "abmoiz-fileorganizer",
   "version": "1.0.0",
   "main": "index.js",
   "type": "module",
@@ -9,8 +9,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
+  "description": "File Organizer Using Typescript , OOPS , Inquirer and Chalk",
   "dependencies": {
-    "@inquirer/prompts": "^5.3.2"
+    "@inquirer/prompts": "^5.3.2",
+    "chalk": "^5.3.0"
   }
 }
