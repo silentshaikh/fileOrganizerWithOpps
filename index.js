@@ -68,7 +68,7 @@ class Folder {
 let isCond = true;
 let fileSyntax = /^[a-z]+(\.[a-z]+)$/;
 while (isCond) {
-    let option = await select({ message: "Select any one", choices: [{ name: "Add Folder", value: "Add Folder" }, { name: "Add File", value: "Add File" }, { name: "Remove File", value: "Remove File" }, { name: "Rename File", value: "Rename File" }, { name: "Remove Folder", value: "Remove Folder" }, { name: "Rename Folder", value: "Rename Folder" }, { name: "Show Folder", value: "Show Folder" }] });
+    let option = await select({ message: "Select any one", choices: [{ name: "Add Folder", value: "Add Folder" }, { name: "Add File", value: "Add File" }, { name: "Remove File", value: "Remove File" }, { name: "Rename File", value: "Rename File" }, { name: "Remove Folder", value: "Remove Folder" }, { name: "Rename Folder", value: "Rename Folder" }, { name: "Show Folder", value: "Show Folder" }, { name: "Move File", value: "Move File" }] });
     if (option === "Add Folder") {
         while (isCond) {
             isCond = true;
@@ -78,17 +78,16 @@ while (isCond) {
             let duplictFolderName = Folder.folder.find((e) => e.name === folderName);
             if (duplictFolderName?.name) {
                 //if folder is already exist
-                console.log(`Folder: ${folderName} is already exist`);
+                console.log(` \n \tFolder: ${folderName} is already exist \n`);
             }
             else {
                 if (folderName.trim() === "") {
                     //if folderName is empty
-                    console.log("Please Enter a Folder Name for create a folder");
+                    console.log(" \n \tPlease Enter a Folder Name for create a folder \n");
                 }
                 else {
                     //print the folder name
-                    console.log(`Folder :${folderName}`);
-                    //   let ourFolder = new Folder(folderName,`/path/${folderName}`);
+                    console.log(` \n \tFolder :${folderName} \n`);
                     // create the object of the folder
                     let folderObj = {
                         name: folderName,
@@ -110,7 +109,7 @@ while (isCond) {
             // give the name of the file for add the file
             let inputFolderName = await input({ message: "Please Enter the name of the folder to find the folder" });
             if (inputFolderName === "") {
-                console.log("Please Enter the name of the folder");
+                console.log(" \n \tPlease Enter the name of the folder \n");
             }
             else {
                 let findFolder = Folder.folder.find((e) => e.name.toLowerCase().split(/\s+/).join("") === inputFolderName.toLowerCase().split(/\s+/).join(""));
@@ -119,11 +118,11 @@ while (isCond) {
                     //check if file name exist in the files
                     let duplictName = findFolder.files.find((e) => e.name === fileName);
                     if (duplictName?.name) {
-                        console.log(`Please dont be add same name file.`);
+                        console.log(`\n \tPlease dont be add same name file.\n`);
                     }
                     else {
                         if (fileName.trim() === "") {
-                            console.log("Please Enter the Name of the file");
+                            console.log("\n \tPlease Enter the Name of the file\n");
                         }
                         else {
                             if (fileName.toLowerCase().match(fileSyntax)) {
@@ -134,14 +133,14 @@ while (isCond) {
                                 console.log(findFolder);
                             }
                             else {
-                                console.log("Please give the extension of file with . notation");
+                                console.log("\n \tPlease give the extension of file with . notation\n");
                             }
                         }
                     }
                 }
                 else {
                     //if folder is not available for add files in a folder 
-                    console.log(`Folder Name: ${inputFolderName} is not available.`);
+                    console.log(`\n \tFolder Name: ${inputFolderName} is not available.\n`);
                 }
             }
             //provide confirmation for run again the add file process
@@ -155,7 +154,7 @@ while (isCond) {
             //give the folder name for remove file in a folder
             let findFildrName = await input({ message: "Enter the Folder name for remove the file" });
             if (findFildrName.trim() === "") {
-                console.log("Please Enter the name of the folder for remove the file in the folder/");
+                console.log("\n \tPlease Enter the name of the folder for remove the file in the folder\n");
             }
             else {
                 //find the folder name for remove the file of the folder
@@ -164,7 +163,7 @@ while (isCond) {
                     //give the name of the file for remove this file
                     let removeName = await input({ message: "Enter the name of the file for remove the file" });
                     if (removeName.trim() === "") {
-                        console.log("Please Enter the name of the file");
+                        console.log("\n \tPlease Enter the name of the file\n");
                     }
                     else {
                         //destructuring the object
@@ -179,13 +178,13 @@ while (isCond) {
                             findNameForRemove.files = filtrFiles;
                         }
                         else {
-                            console.log(`File : ${removeName} is not available`);
+                            console.log(`\n \tFile : ${removeName} is not available\n`);
                         }
                     }
                 }
                 else {
                     //if folder is not available for remove a file
-                    console.log(`Folder Name: ${findFildrName} is not available.`);
+                    console.log(`\n \tFolder Name: ${findFildrName} is not available.\n`);
                 }
             }
             //provide confirmation for run again the delete process
@@ -200,7 +199,7 @@ while (isCond) {
             let findFoldr = await input({ message: "If you want to rename the name of the file, so please give me the name of the folder for rename the file" });
             //give empty input
             if (findFoldr.trim() === "") {
-                console.log("Please Enter the name of the folder for rename the file of the folder.");
+                console.log("\n \tPlease Enter the name of the folder for rename the file of the folder.\n");
             }
             else {
                 //find the folder name for edit the name of the file of the folder
@@ -218,11 +217,11 @@ while (isCond) {
                         //check if new name is already exist in the files
                         let findDUplictName = files.find((e) => e.name === editFileName);
                         if (findDUplictName?.name) {
-                            console.log(`File Name : ${editFileName} is already exist`);
+                            console.log(`\n \tFile Name : ${editFileName} is already exist\n`);
                         }
                         else {
                             if (editFileName.trim() === "") {
-                                console.log("Please Enter the new Name of the file");
+                                console.log("\n \tPlease Enter the new Name of the file\n");
                             }
                             else {
                                 if (editFileName.toLowerCase().match(fileSyntax)) {
@@ -233,19 +232,19 @@ while (isCond) {
                                     findFile.date = new Date();
                                 }
                                 else {
-                                    console.log(`Please give the extension of file with . notation`);
+                                    console.log(`\n \tPlease give the extension of file with . notation\n`);
                                 }
                             }
                         }
                     }
                     else {
                         //if file is available for edit the file
-                        console.log(`File :${FileName} is not avaiable.`);
+                        console.log(`\n \tFile :${FileName} is not avaiable.\n`);
                     }
                 }
                 else {
                     //if folder is available for edit the file
-                    console.log(`Folder : ${findFoldr} is not available.`);
+                    console.log(`\n \tFolder : ${findFoldr} is not available.\n`);
                 }
             }
             //give confirmation for run again this edit process
@@ -259,7 +258,7 @@ while (isCond) {
             //give the folder name for delete the folder
             let findFolder = await input({ message: "Enter the folder name for remove the folder" });
             if (findFolder.trim() === "") {
-                console.log("Please Enter the folder name. ");
+                console.log("\n \tPlease Enter the folder name. \n");
             }
             else {
                 //find the folder for delte the folder
@@ -273,7 +272,7 @@ while (isCond) {
                 }
                 else {
                     //if folder is not available
-                    console.log(`Folder :${findFolder} is not available.`);
+                    console.log(`\n \tFolder :${findFolder} is not available.\n`);
                 }
             }
             //if you want to run again this delete process
@@ -287,7 +286,7 @@ while (isCond) {
             //give the name of the folder
             let foldrName = await input({ message: "If you want to rename the name of the folder, so please give me the name of the folder." });
             if (foldrName.trim() === "") {
-                console.log("Please Enter the name of the folder for rename the folder");
+                console.log("\n \tPlease Enter the name of the folder for rename the folder\n");
             }
             else {
                 //find folder for edit
@@ -296,13 +295,13 @@ while (isCond) {
                     //give the new name of the folder
                     let editFolderName = await input({ message: "Enter the new name of the Folder." });
                     if (editFolderName.trim() === "") {
-                        console.log("Please Enter the new name of the folder");
+                        console.log("\n \tPlease Enter the new name of the folder\n");
                     }
                     else {
                         //find duplicate name of the folder
                         let duplictFoldrName = Folder.folder.find((e) => e.name.toLowerCase().split(/\s+/).join("") === editFolderName.toLowerCase().split(/\s+/).join(""));
                         if (duplictFoldrName?.name) {
-                            console.log(`Folder : ${editFolderName} is already exist.`);
+                            console.log(`\n \tFolder : ${editFolderName} is already exist.\n`);
                         }
                         else {
                             //update the folder detail
@@ -319,7 +318,7 @@ while (isCond) {
                     }
                 }
                 else {
-                    console.log(`Folder : ${foldrName} is not available.`);
+                    console.log(`\n \tFolder : ${foldrName} is not available.\n`);
                 }
             }
             let moreEditFolder = await confirm({ message: "Do you want to edit more Folder" });
@@ -331,12 +330,13 @@ while (isCond) {
         while (isCond) {
             let searchFolder = await input({ message: "Enter the name of the folder for show the folder" });
             if (searchFolder.trim() === "") {
-                console.log("Please Enter thr name of the folder.");
+                console.log("\n \tPlease Enter thr name of the folder.\n");
             }
             else {
                 let findFolderForShow = Folder.folder.find((e) => e.name.toLowerCase().split(/\s+/).join("") === searchFolder.toLowerCase().split(/\s+/).join(""));
                 if (findFolderForShow) {
                     let { name, path, files } = findFolderForShow;
+                    console.log(`\t \t ### FOLDER ### \n`);
                     console.log(`\n \t### Folder :${name} . ###\n`);
                     console.log(`\n \t### Folder Path :${path} . ###\n`);
                     console.log(`\t \t ### FILES ### \n`);
@@ -350,11 +350,87 @@ while (isCond) {
                     });
                 }
                 else {
-                    console.log(`\n Folder : ${searchFolder} is not available`);
+                    console.log(`\n \t Folder : ${searchFolder} is not available.\n`);
                 }
             }
             let showMreFolder = await confirm({ message: "Do you want to show again the folders." });
             isCond = showMreFolder;
+        }
+    }
+    else if (option === "Move File") {
+        isCond = true;
+        while (isCond) {
+            //we want folder name for transfer the file of this folder
+            let wantFolderForMoveFile = await input({ message: "If You want to move files of folder into another folder , so please enter me the name of the folder." });
+            //check if input is empty
+            if (wantFolderForMoveFile.trim() === "") {
+                console.log(`\n \t Please Enter the name of the folder. \n`);
+            }
+            else {
+                //find the folder for transfer the files of this folder
+                let findFolder = Folder.folder.find((e) => e.name.toLowerCase().split(/\s+/).join("") === wantFolderForMoveFile.toLowerCase().split(/\s+/).join(""));
+                //if file was found
+                if (findFolder?.name) {
+                    //we want another folder for transfer the files
+                    let foldrNameForTransferFiles = await input({ message: "Enter the name of whose folder for transfer files" });
+                    //check if input is empty
+                    if (foldrNameForTransferFiles.trim() === "") {
+                        console.log("\n \t Please Enter the name of the folder for transfer file.\n");
+                    }
+                    else {
+                        //find folder for transfer files
+                        let findFoldrForTransferFile = Folder.folder.find((e) => e.name.toLowerCase().split(/\s+/).join("") === foldrNameForTransferFiles.toLowerCase().split(/\s+/).join(""));
+                        //if folder will be find
+                        if (findFoldrForTransferFile?.name) {
+                            //we want file name for transfer the file into another folder
+                            let moveFileInput = await input({ message: "Enter the name of the file for transfer into another folder" });
+                            //check if input is emoty
+                            if (moveFileInput.trim() === "") {
+                                console.log("\n \t Please Enter the name of the file for move into another folder.\n");
+                            }
+                            else {
+                                //destructuring of object
+                                let { files } = findFoldrForTransferFile;
+                                //find duplicate file in transfer folder
+                                let duplictFiles = files.find((e) => e.name.toLowerCase().split(/\s+/).join("") === moveFileInput.toLowerCase().split(/\s+/).join(""));
+                                if (duplictFiles) {
+                                    //if file is already exist
+                                    console.log(`\n \t File : ${moveFileInput} is already exist.\n`);
+                                }
+                                else {
+                                    //find file in those folder which transfer the file into another folder
+                                    let findFileForTransfer = findFolder.files.find((e) => e.name.toLowerCase().split(/\s+/).join("") === moveFileInput.toLowerCase().split(/\s+/).join(""));
+                                    //if file was found
+                                    if (findFileForTransfer) {
+                                        //update the path of the file
+                                        findFileForTransfer.path = `/path/${foldrNameForTransferFiles}/${moveFileInput}`;
+                                        //transfer file into another folder
+                                        findFoldrForTransferFile.files.push(findFileForTransfer);
+                                        //remove transfer file in those folder who passes the file
+                                        let filtFiles = findFolder.files.filter((e) => {
+                                            return e.name.toLowerCase().split(/\s+/).join("") !== moveFileInput.toLowerCase().split(/\s+/).join("");
+                                        });
+                                        //update those folder who passes the file 
+                                        findFolder.files = filtFiles;
+                                    }
+                                    else {
+                                        console.log(`\n \t File : ${moveFileInput} is not available.\n`);
+                                    }
+                                }
+                            }
+                        }
+                        else {
+                            console.log(`\n \t Folder : ${foldrNameForTransferFiles} is not available.\n`);
+                        }
+                    }
+                }
+                else {
+                    console.log(`\n \t Folder : ${wantFolderForMoveFile} is not available.\n`);
+                }
+            }
+            //Do you want to transfer more files
+            let fileTransfrAgain = await confirm({ message: "Do you want tranfer more files" });
+            isCond = fileTransfrAgain;
         }
     }
     //provide confirmation for run again this process
